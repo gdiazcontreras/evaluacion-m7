@@ -2,7 +2,7 @@
   <article class="product-card">
     <h3>{{ product.title }}</h3>
     <p>{{ product.description }}</p>
-    <p class="price">Precio: ${{ product.price }} CLP</p>
+    <p class="price">Precio: ${{ product.price }}</p>
   </article>
 </template>
 
