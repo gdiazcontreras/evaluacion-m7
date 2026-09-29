@@ -2,7 +2,7 @@
 
 ## 📖 Descripción
 
-Este proyecto corresponde a la evaluación del Módulo 7 del curso **Desarrollo de Aplicaciones Front-End Trainee**.
+Este proyecto corresponde a la evaluación del **Módulo 7** del curso.
 
 La aplicación es una SPA (Single Page Application) desarrollada con Vue.js que permite visualizar un catálogo dinámico de productos obtenidos desde una API REST. Los usuarios pueden filtrar productos por categoría, marcarlos como favoritos y acceder a una vista individual con información detallada de cada producto.
 
@@ -126,8 +126,6 @@ El proyecto está publicado en GitHub:
 El proyecto está desplegado en GitHub Pages:
 
 👉 [Ver aplicación](https://gdiazcontreras.github.io/evaluacion-m7/)
-
-👉 **Ver aplicación**
 
 ## 📸 Capturas
 
