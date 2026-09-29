@@ -125,6 +125,8 @@ El proyecto está publicado en GitHub:
 
 El proyecto está desplegado en GitHub Pages:
 
+👉 [Ver aplicación](https://gdiazcontreras.github.io/evaluacion-m7/)
+
 👉 **Ver aplicación**
 
 ## 📸 Capturas
