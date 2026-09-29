@@ -5,7 +5,10 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit",
+    "test:e2e": "cypress run --e2e",
+    "test:e2e:open": "cypress open --e2e"
   },
   "dependencies": {
     "@mdi/js": "7.4.47",
@@ -44,7 +47,31 @@
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
-    "rules": {}
+    "rules": {},
+    "overrides": [
+      {
+        "files": [
+          "tests/unit/**/*.js"
+        ],
+        "env": {
+          "jest": true,
+          "browser": true
+        }
+      },
+      {
+        "files": [
+          "cypress/e2e/**/*.js"
+        ],
+        "env": {
+          "mocha": true,
+          "browser": true
+        },
+        "globals": {
+          "cy": "readonly",
+          "Cypress": "readonly"
+        }
+      }
+    ]
   },
   "browserslist": [
     "> 1%",
