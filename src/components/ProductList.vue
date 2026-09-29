@@ -39,44 +39,29 @@
   </section>
 </template>
 
-<script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+<script setup>
+import { computed, onMounted } from 'vue'
+import { useStore } from 'vuex'
 import ProductCard from './ProductCard.vue'
 
-export default {
-  name: 'ProductList',
-  components: {
-    ProductCard
-  },
-  computed: {
-    ...mapState('products', {
-      products: 'items',
-      loading: 'loading',
-      error: 'error'
-    }),
-    ...mapGetters('products', ['categories', 'filteredProducts']),
-    categoryOptions() {
-      return [
-        { title: 'Todas las categorías', value: '' },
-        ...this.categories.map(category => ({ title: category, value: category }))
-      ]
-    },
-    selectedCategory: {
-      get() {
-        return this.$store.state.filters.selectedCategory
-      },
-      set(category) {
-        this.$store.dispatch('filters/setCategory', category)
-      }
-    }
-  },
-  mounted() {
-    this.fetchProducts()
-  },
-  methods: {
-    ...mapActions('products', ['fetchProducts'])
-  }
-}
+const store = useStore()
+const products = computed(() => store.state.products.items)
+const loading = computed(() => store.state.products.loading)
+const error = computed(() => store.state.products.error)
+const categories = computed(() => store.getters['products/categories'])
+const filteredProducts = computed(() => store.getters['products/filteredProducts'])
+const categoryOptions = computed(() => [
+  { title: 'Todas las categorías', value: '' },
+  ...categories.value.map(category => ({ title: category, value: category }))
+])
+const selectedCategory = computed({
+  get: () => store.state.filters.selectedCategory,
+  set: category => store.dispatch('filters/setCategory', category)
+})
+
+onMounted(() => {
+  store.dispatch('products/fetchProducts')
+})
 </script>
 
 <style scoped>

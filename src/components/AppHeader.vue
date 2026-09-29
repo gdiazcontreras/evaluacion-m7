@@ -10,24 +10,17 @@
   </v-app-bar>
 </template>
 
-<script>
+<script setup>
+import { computed } from 'vue'
+import { useTheme } from 'vuetify'
 import { mdiWeatherSunny, mdiWeatherNight } from '@mdi/js'
 
-export default {
-  name: 'AppHeader',
-  computed: {
-    isDark() {
-      return this.$vuetify.theme.current.dark
-    },
-    themeIcon() {
-      return this.isDark ? mdiWeatherSunny : mdiWeatherNight
-    }
-  },
-  methods: {
-    toggleTheme() {
-      this.$vuetify.theme.change(this.isDark ? 'light' : 'dark')
-    }
-  }
+const theme = useTheme()
+const isDark = computed(() => theme.current.value.dark)
+const themeIcon = computed(() => isDark.value ? mdiWeatherSunny : mdiWeatherNight)
+
+function toggleTheme() {
+  theme.change(isDark.value ? 'light' : 'dark')
 }
 </script>
 

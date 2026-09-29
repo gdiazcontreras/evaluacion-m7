@@ -3,26 +3,17 @@
     <AppHeader />
     <v-main>
       <v-container class="catalog-container py-8">
-        <ProductList />
+        <RouterView />
       </v-container>
     </v-main>
     <AppFooter />
   </v-app>
 </template>
 
-<script>
-import AppHeader from './components/Header.vue'
-import AppFooter from './components/Footer.vue'
-import ProductList from './components/ProductList.vue'
-
-export default {
-  name: 'App',
-  components: {
-    AppHeader,
-    AppFooter,
-    ProductList
-  }
-}
+<script setup>
+import { RouterView } from 'vue-router'
+import AppHeader from './components/AppHeader.vue'
+import AppFooter from './components/AppFooter.vue'
 </script>
 
 <style>

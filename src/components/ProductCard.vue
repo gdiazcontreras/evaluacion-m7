@@ -6,7 +6,7 @@
       <p class="mb-4">{{ product.description }}</p>
       <p class="text-primary font-weight-bold">Precio: ${{ product.price }}</p>
     </v-card-text>
-    <v-card-actions class="pa-4 pt-0">
+    <v-card-actions class="pa-4 pt-0 flex-column align-stretch ga-2">
       <v-btn
         type="button"
         color="primary"
@@ -18,34 +18,43 @@
         <v-icon :icon="favoriteIcon" aria-hidden="true" class="mr-2" />
         {{ isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos' }}
       </v-btn>
+      <v-btn type="button" color="primary" variant="text" block @click="verDetalle">
+        Ver detalle
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
-<script>
+<script setup>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import { mdiHeart, mdiHeartOutline } from '@mdi/js'
 
-export default {
-  name: 'ProductCard',
-  props: {
-    product: {
-      type: Object,
-      required: true
-    }
-  },
-  computed: {
-    favoriteIcon() {
-      return this.isFavorite ? mdiHeart : mdiHeartOutline
-    },
-    isFavorite() {
-      return this.$store.getters['favorites/isFavorite'](this.product.id)
-    }
-  },
-  methods: {
-    toggleFavorite() {
-      this.$store.dispatch('favorites/toggleFavorite', this.product.id)
-    }
+const props = defineProps({
+  product: {
+    type: Object,
+    required: true
   }
+})
+const store = useStore()
+const router = useRouter()
+const isFavorite = computed(() => store.getters['favorites/isFavorite'](props.product.id))
+const favoriteIcon = computed(() => isFavorite.value ? mdiHeart : mdiHeartOutline)
+
+function toggleFavorite() {
+  store.dispatch('favorites/toggleFavorite', props.product.id)
+}
+
+function verDetalle() {
+  router.push({
+    path: `/productos/${props.product.id}`,
+    query: {
+      nombre: props.product.title,
+      categoria: props.product.category,
+      precio: props.product.price
+    }
+  })
 }
 </script>
 
