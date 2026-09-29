@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import ProductCard from './ProductCard.vue'
 
 export default {
@@ -49,48 +49,27 @@ export default {
   components: {
     ProductCard
   },
-  data() {
-    return {
-      products: [],
-      loading: false,
-      error: null,
-      selectedCategory: ''
-    }
-  },
   computed: {
-    categories() {
-      return [...new Set(this.products.map(product => product.category))]
-    },
-    filteredProducts() {
-      if (!this.selectedCategory) {
-        return this.products
+    ...mapState('products', {
+      products: 'items',
+      loading: 'loading',
+      error: 'error'
+    }),
+    ...mapGetters('products', ['categories', 'filteredProducts']),
+    selectedCategory: {
+      get() {
+        return this.$store.state.filters.selectedCategory
+      },
+      set(category) {
+        this.$store.dispatch('filters/setCategory', category)
       }
-
-      return this.products.filter(
-        product => product.category === this.selectedCategory
-      )
     }
   },
   mounted() {
     this.fetchProducts()
   },
   methods: {
-    async fetchProducts() {
-      this.loading = true
-      this.error = null
-      this.products = []
-      this.selectedCategory = ''
-
-      try {
-        const response = await axios.get('https://dummyjson.com/products')
-        this.products = response.data.products
-      } catch (error) {
-        this.error = 'No se pudieron cargar los productos. Inténtalo nuevamente más tarde.'
-        console.error('Error al obtener los productos:', error)
-      } finally {
-        this.loading = false
-      }
-    }
+    ...mapActions('products', ['fetchProducts'])
   }
 }
 </script>
