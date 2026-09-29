@@ -1,21 +1,30 @@
 <template>
-  <article class="product-card">
-    <h3>{{ product.title }}</h3>
-    <p>{{ product.description }}</p>
-    <p class="price">Precio: ${{ product.price }}</p>
-    <button
-      type="button"
-      class="favorite-button"
-      :class="{ 'is-favorite': isFavorite }"
-      @click="toggleFavorite"
-    >
-      <span aria-hidden="true">{{ isFavorite ? '♥' : '♡' }}</span>
-      {{ isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos' }}
-    </button>
-  </article>
+  <v-card tag="article" class="d-flex flex-column h-100" border elevation="1">
+    <v-img :src="product.thumbnail" :alt="product.title" height="200" class="flex-grow-0" />
+    <v-card-text class="flex-grow-1">
+      <h3 class="text-h6 mb-3">{{ product.title }}</h3>
+      <p class="mb-4">{{ product.description }}</p>
+      <p class="text-primary font-weight-bold">Precio: ${{ product.price }}</p>
+    </v-card-text>
+    <v-card-actions class="pa-4 pt-0">
+      <v-btn
+        type="button"
+        color="primary"
+        :variant="isFavorite ? 'flat' : 'outlined'"
+        class="favorite-button"
+        block
+        @click="toggleFavorite"
+      >
+        <v-icon :icon="favoriteIcon" aria-hidden="true" class="mr-2" />
+        {{ isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos' }}
+      </v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
+import { mdiHeart, mdiHeartOutline } from '@mdi/js'
+
 export default {
   name: 'ProductCard',
   props: {
@@ -25,6 +34,9 @@ export default {
     }
   },
   computed: {
+    favoriteIcon() {
+      return this.isFavorite ? mdiHeart : mdiHeartOutline
+    },
     isFavorite() {
       return this.$store.getters['favorites/isFavorite'](this.product.id)
     }
@@ -38,45 +50,11 @@ export default {
 </script>
 
 <style scoped>
-.product-card {
-  padding: 24px;
-  border: 1px solid #dce3ea;
-  border-radius: 8px;
-  background: #fff;
-}
-
 h3 {
-  margin: 0 0 12px;
-}
-
-p {
-  line-height: 1.5;
-}
-
-.price {
-  margin-bottom: 0;
-  font-weight: bold;
-  color: #216747;
+  overflow-wrap: anywhere;
 }
 
 .favorite-button {
-  margin-top: 16px;
-  padding: 8px 12px;
-  border: 1px solid #216747;
-  border-radius: 4px;
-  background: #fff;
-  color: #216747;
-  font: inherit;
-  cursor: pointer;
-}
-
-.favorite-button.is-favorite {
-  background: #216747;
-  color: #fff;
-}
-
-.favorite-button:focus-visible {
-  outline: 3px solid #2c3e50;
-  outline-offset: 3px;
+  text-transform: none;
 }
 </style>

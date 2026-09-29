@@ -1,7 +1,7 @@
 <template>
-  <footer>
+  <v-footer class="justify-center text-center pa-5" color="surface">
     <p>Vue Product Showcase · Proyecto de Front-End</p>
-  </footer>
+  </v-footer>
 </template>
 
 <script>
@@ -9,15 +9,3 @@ export default {
   name: 'AppFooter'
 }
 </script>
-
-<style scoped>
-footer {
-  padding: 20px;
-  border-top: 1px solid #dce3ea;
-  text-align: center;
-}
-
-p {
-  margin: 0;
-}
-</style>
